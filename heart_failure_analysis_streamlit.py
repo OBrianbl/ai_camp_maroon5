@@ -113,13 +113,14 @@ max_Range = st.slider("Choose a Maximum Range for Age", min_value = min_Range, m
 with st.expander(f"Table with Events with Age Between {min_Range} yrs and {max_Range} yrs."):
     heart_failure_by_age_with_events_df = hf_with_events[((hf_with_events.Age <= max_Range) & (hf_with_events.Age >= min_Range))]
     st.table(heart_failure_by_age_with_events_df.drop(['Age','HeartDisease'],axis=1).describe())
-    st.write("This table shows us .... ")
+    st.write("This table allows for filtering of data between user-specified age ranges. This is specifically to view the patients with heart disease")
 # This st.expander allows for drop down of table, we are able to use the no_events dataframe now
 with st.expander(f"Table with No Events with Age Between {min_Range} yrs and {max_Range} yrs."):
     heart_failure_by_age_with_no_events_df = hf_with_no_events[((hf_with_no_events.Age <= max_Range) & (hf_with_no_events.Age >= min_Range))]
     st.table(heart_failure_by_age_with_no_events_df.drop(['Age','HeartDisease'],axis=1).describe())
-    st.write("This table shows us......")
-
+    st.write("This table allows for filtering of data between user-specified age ranges. This is specifically to view the patients without heart disease")
+with st.expander("Datatable Analysis"):
+    st.write("The ability to filter statistics by age is crucial because age is one of the chief variables in determining not only heart disease, but countless other physical illnesses. The deterioration of the body as age goes on leads to many sytems in the body becoming weaker, all eventually steering towards weaker organs and a weaker heart. In our dataset, we can see that mean factors all increase as max age increases, which leads to the obvious conclusion that an older person has an exponentially higher chance for heart disease than a younger person. A Machine Learning model needs to account for age when considering the chance for heart failure. This is not to say that only seniors can recieve heart disease. Outliers include a 31 year old with heart disease and a 76 year old without heart disease. Filtering the data by age range also allows for careful observation on common healthy heart levels for various age categories. The median cholesterol and max heart rate for each age range can vary greatly, allowing for more precise machine learning for our heart failure predictions. Limitations in the table are the exclusions of string categories such as Chest pain type and Sex. Our model only allows for numerical data so the strings could not be applied.")
 
 ########################################
 ########    heatmap.          ##########
@@ -177,13 +178,13 @@ elif x_option == 'Age' and y_option == 'RestingECG' :
     st.plotly_chart(plotly_scatter_function(heart_failure_df, x_option, y_option, color_labels, color_scheme, plot_title, x_axis_title, y_axis_title, color_label_title))
     st.write("This scatter plot above illustrates the relationship between a patient's age, RestingECG, and whether or not they have heart disease. Patients with LVH and Normal resting ECGs are less likely to have heart disease, whereas those with ST resting EGC's have a higher chance of developing or having a heart disease. However, age also seems to correlate with the differing ECGs, with patients over their 50s being more susceptible to heart disease and those under 50 having less of a risk. Overall those with LVH and normal resting EGC's are less prone to having heart disease, whereas those with ST have a higher risk. ")
     st.write("")
-elif x_option == 'ChestPainType' and y_option == 'Cholesterol' :
+elif x_option == 'ChestPainType' and y_option == 'Cholesterol':
     plot_title= 'Chest Pain Type in correlation to Cholesterol'
     x_axis_title= 'ChestPainType'
     y_axis_title= 'Cholesterol'
     color_label_title= 'Heart Disease (0 is no and 1 is yes)'
     st.plotly_chart(plotly_scatter_function(heart_failure_df, x_option, y_option, color_labels, color_scheme, plot_title, x_axis_title, y_axis_title, color_label_title))
-    st.write("This scatter plot above illustrates the relationship between a patient's chest pain type, cholesterol levels, and whether or not they have heart disease. Patients who experience chest pains such as ATA, NAP, and TA are less likely to have some form of heart disease, the plot suggesting that those who do experience it, to be at lower risk. At the same time, those who experience ASY chest pains face a higher risk of having heart disease or being at risk of it. Overall those who experience ASY are more likely to have heart disease than those who get chest pains such as ATA, NAP, and TA.")
+    st.write("This scatter plot above illustrates the relationship between a patient's chest pain type, cholesterol levels, and whether or not they have heart disease. Patients who experience chest pains such as ATA, NAP, and TA are less likely to have some form of heart disease, the plot suggesting that those who do experience it, to be at lower risk. At the same time, those who experience ASY chest pains often have higher cholesterol and face having heart disease or being at risk. Overall those who experience ASY are more likely to have heart disease than those who get chest pains such as ATA, NAP, and TA.")
     st.write("")
 elif x_option == 'ChestPainType' and y_option == 'RestingECG' :
     plot_title= 'Chest Pain Type and RestingECG'
@@ -191,7 +192,7 @@ elif x_option == 'ChestPainType' and y_option == 'RestingECG' :
     y_axis_title= 'RestingECG'
     color_label_title= 'Heart Disease (0 is no and 1 is yes)'
     st.plotly_chart(plotly_scatter_function(heart_failure_df, x_option, y_option, color_labels, color_scheme, plot_title, x_axis_title, y_axis_title, color_label_title))
-    st.write("The Scatter plot tells us # still working on will finsh by tonight")
+    st.write("This scatter plot above illustrates the relationship between a patient's Chest Pain Type, RestingECG, and whether or not they have heart disease. Patients who experience chest pains such as ATA, NAP, and TA are less likely to have some form of heart disease, the plot suggesting that those who do experience it are at lower risk. Those with an LVH (resting ECG) and an ASY Chest Pain Type are at a higher risk than those with an average ECG or other chest pain type. Overall those who have LVH and ASY Chest Pain types are more at risk for developing a Heart Disease.")
     st.write("")
     
 #elif x_option ==  and y_option == :
@@ -330,10 +331,3 @@ elif x_option == 'ST_Slope' and y_option == 'Age':
     st.plotly_chart(plotly_strip_function(heart_failure_df, x_option , y_option , color_labels, color_scheme, plot_title, x_axis_title, y_axis_title, color_label_title))
     st.write("The strip plot tells us")
     st.write("")
-
-
-
-
-
-
-

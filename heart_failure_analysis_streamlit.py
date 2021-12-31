@@ -96,7 +96,7 @@ with st.expander("Datatable Stats of with Events"):
     st.write("This table shows us of 356 patients affected by heart disease.")
 with st.expander("Datatable Stats of No Event"):
     st.dataframe(hf_with_no_events_stats)
-    st.write("This table shows us......<<ANALYSIS GOES HERE>>")
+    st.write("This table shows us of 390 patients without heart disease.")
 with st.expander("Datatable Analysis"):
     st.write("When comparing those with and without heart disease, a noticeable increase is seen in those affected in each category. Notably the mean age, Resting blood pressure, Cholesterol, and Fasting blood sugar. A lower max heart rate seen in those with heart disease is very possibly due to each of these factors weakening the heart. It is evident that each of these categories are key factors when predicting a Heart attack.")
 ##################################################################
@@ -128,7 +128,7 @@ with st.expander("Datatable Analysis"):
 st.subheader('Heatmap Comparison')
 # heart_failure_df
 st.plotly_chart(corr_heatmap(heart_failure_df))
-st.write("The heatmap tells us the relationship between each numerical variable to each other numerical variable. When a value on the heatmap is between 0 to 1, that shows direct proportionality, whereas a value between -1 to 0 shows inverse proportionality. A value of 0 shows a complete lack of a relationship between the 2 variables, while a value of 1 shows a perfectly proportional relationship between the variables. The heatmap seems to suggest a relatively strong correlation between heart disease to maximum heart rate and to old peak (the relation between exercise and ST depressions.) Specifically, the heatmap suggests that patients with heart disease have a lower maximum heart rate and a higher old peak. There also appears to be a negative correlation between age and maximum heart rate, while there is a posiive correlation between age and heart disease, suggesting that older patients may have a lower maximum heart rate, but that older patients also have a higher chance of heart disease. Lastly, there is a positive correlation between heart disease and fasting blood sugar, as well as heart disease and cholesterol. Therefore, this heatmap suggests that higher fasting blood sugar increases risks of heart disease, as does higher levels of cholesterol.")
+st.write("The heatmap tells us the relationship between each numerical variable to each other numerical variable. When a value on the heatmap is between 0 to 1, that shows direct proportionality, whereas a value between -1 to 0 shows inverse proportionality. A value of 0 shows a complete lack of a relationship between the 2 variables, while a value of 1 shows a perfectly proportional relationship between the variables. The heatmap seems to suggest a relatively strong correlation between heart disease to maximum heart rate and to old peak (the relation between exercise and ST depressions.) Specifically, the heatmap suggests that patients with heart disease have a lower maximum heart rate and a higher old peak. There also appears to be a negative correlation between age and maximum heart rate, while there is a positive correlation between age and heart disease, suggesting that older patients may have a lower maximum heart rate, but that older patients also have a higher chance of heart disease. Lastly, there is a positive correlation between heart disease and fasting blood sugar, as well as heart disease and cholesterol. Therefore, this heatmap suggests that higher fasting blood sugar increases risks of heart disease, as does higher levels of cholesterol.")
 st.write("")
 
 ###########################################
@@ -210,12 +210,12 @@ elif x_option == 'ChestPainType' and y_option == 'RestingECG' :
 ########   streamlit swarm       ##########
 ###########################################
 
-st.subheader('Swarm Plot')
+st.subheader('Strip Plot')
 # Chest pain type to Cholesterol levels to heart disease swarm plot
 # drop code blow
 
 x_option = st.selectbox('Pick one', ['ChestPainType', 'Sex', 'ST_Slope'])
-y_option = st.selectbox('Pick one', ['Cholesterol', 'RestingECG', 'MaxHR', 'Oldpeak', 'Age'])
+y_option = st.selectbox('Pick one', ['Cholesterol', 'MaxHR', 'Oldpeak', 'Age'])
 
 # 1: if -> Age vs Cholest
 # 2: elif -> Age vs RestingECG
@@ -233,13 +233,6 @@ if x_option == 'ChestPainType' and y_option == 'Cholesterol':
     st.plotly_chart(plotly_strip_function(heart_failure_df, x_option , y_option , color_labels, color_scheme, plot_title, x_axis_title, y_axis_title, color_label_title))
     st.write("The strip plot tells us the relationship between a patient's chest pain type, their cholesterol levels, and whether or not they have heart disease. Patients who experience ATA, TA, and NAP type chest pain seem to more frequently not have heart disease, suggesting that people who experience ATA, TA, and NAP type chest pain are at a lower risk of developing heart disease. Patients who experience ASY type chest pain seem to more frequently have heart disease, suggesting that people who experience ASY type chest pain are at a higher risk of developing heart disease. Except for a few outliers, the different types of chest pain that patients experience does not seem to be connected to increased or decreased cholesterol levels, suggesting that chest pain type and cholesterol levels do not have much of a connection. Patients who have heart disease appear to on average have slightly higher cholesterol levels than patients who do not have heart disease, implying that people who have higher cholesterol levels are at a slightly higher risk of developing heart disease than people who have lower cholesterol levels.")
     st.write("") 
-elif x_option == 'ChestPainType' and y_option == 'RestingECG':
-    plot_title= 'Chest Pain Type, Resting Electrocardiogram, and Heart Disease'
-    x_axis_title= 'Chest Pain Type'
-    y_axis_title= 'Resting Electrocardiogram'
-    st.plotly_chart(plotly_strip_function(heart_failure_df, x_option , y_option , color_labels, color_scheme, plot_title, x_axis_title, y_axis_title, color_label_title))
-    st.write("The strip plot tells us")
-    st.write("")
 elif x_option == 'ChestPainType' and y_option == 'MaxHR':
     plot_title= 'Chest Pain Type, Maximum Heart Rate, and Heart Disease'
     x_axis_title= 'Chest Pain Type'
@@ -252,7 +245,7 @@ elif x_option == 'ChestPainType' and y_option == 'Oldpeak':
     x_axis_title= 'Chest Pain Type'
     y_axis_title= 'Oldpeak'
     st.plotly_chart(plotly_strip_function(heart_failure_df, x_option , y_option , color_labels, color_scheme, plot_title, x_axis_title, y_axis_title, color_label_title))
-    st.write("The strip plot tells us the relationship between a patient's chest pain type, their oldpeak, and whether or not they have heart disease. Patients who experience ATA, TA, and NAP type chest pain seem to more frequently not have heart disease, suggesting that people who experience ATA, TA, and NAP type chest pain are at a lower risk of developing heart disease. Patients who experience ASY type chest pain seem to more frequently have heart disease, suggesting that people who experience ASY type chest pain are at a higher risk of developing heart disease. Patients with ATA, TA, and NAP type chest pain typically appear to have an oldpeak ranging from 0 to 3, while patients experiencing ASY Type Chest pain to on average have an oldpeak ranging from -2 to 6. Additionally, patients with heart disease often appear to have much higher or lower oldpeaks than patients without heart disease, suggesting that people with an abnormally high or low oldpeak are more likely to develop heart disease. Overall, both ASY type chest pain and an abnormally high or low oldpeak appear to be risk factors for heart disease.")
+    st.write("The strip plot tells us the relationship between a patient's chest pain type, their oldpeak, and whether or not they have heart disease. Patients who experience ATA, TA, and NAP type chest pain seem to more frequently not have heart disease, suggesting that people who experience ATA, TA, and NAP type chest pain are at a lower risk of developing heart disease. Patients who experience ASY type chest pain seem to more frequently have heart disease, suggesting that people who experience ASY type chest pain are at a higher risk of developing heart disease. Patients with ATA, TA, and NAP type chest pain typically appear to have an oldpeak ranging from 0 to 3, while patients experiencing ASY Type Chest pain to on average have an oldpeak ranging from 0 to 6. Additionally, patients with heart disease often appear to have much higher or lower oldpeaks than patients without heart disease, suggesting that people with an abnormally high or low oldpeak are more likely to develop heart disease. Overall, both ASY type chest pain and an abnormally high or low oldpeak appear to be risk factors for heart disease.")
     st.write("")
 elif x_option == 'ChestPainType' and y_option == 'Age':
     plot_title= 'Chest Pain Type, Age, and Heart Disease'
@@ -268,13 +261,6 @@ elif x_option == 'Sex' and y_option == 'Cholesterol':
     st.plotly_chart(plotly_strip_function(heart_failure_df, x_option , y_option , color_labels, color_scheme, plot_title, x_axis_title, y_axis_title, color_label_title))
     st.write("The strip plot tells us the relationship between a patient's sex, their cholesterol levels, and whether or not they have heart disease. More than half of the male patients appear to have heart disease, while only a small amount of the female patients have heart disease, suggesting that males are more likely to develop heart disease. Additionally, patients with heart disease appear to on average have slightly higher cholesterol levels than people without heart disease, suggesting that people with higher cholesterol levels are at risk of developing heart disease. Overall, higher cholesterol levels appear to be a risk factor for heart disease, and males also need to be more wary about developing heart disease than females.")
     st.write("")
-elif x_option == 'Sex' and y_option == 'RestingECG':
-    plot_title= 'Sex, Resting Electrocardiogram, and Heart Disease'
-    x_axis_title= 'Sex'
-    y_axis_title= 'Resting Electrocardiogram'
-    st.plotly_chart(plotly_strip_function(heart_failure_df, x_option , y_option , color_labels, color_scheme, plot_title, x_axis_title, y_axis_title, color_label_title))
-    st.write("The strip plot tells us")
-    st.write("")
 elif x_option == 'Sex' and y_option == 'MaxHR':
     plot_title= 'Sex, Maximum Heart Rate, and Heart Disease'
     x_axis_title= 'Sex'
@@ -287,7 +273,7 @@ elif x_option == 'Sex' and y_option == 'Oldpeak':
     x_axis_title= 'Sex'
     y_axis_title= 'Oldpeak'
     st.plotly_chart(plotly_strip_function(heart_failure_df, x_option , y_option , color_labels, color_scheme, plot_title, x_axis_title, y_axis_title, color_label_title))
-    st.write("The strip plot tells us the relationship between a patient's sex, their oldpeak, and whether or not they have heart disease. More than half of the male patients appear to have heart disease, while only a small amount of the female patients have heart disease, suggesting that males are more likely to develop heart disease. Male patients also appear to typically have larger or smaller oldpeaks than female patients, with the oldpeaks of male patients ranging from 6 to -2, while the oldpeaks of female patients only really range from 4 to 0. Patients with heart disease often appear to have much higher or lower oldpeaks than patients without heart disease, suggesting that people with an abnormally high or low oldpeak are more likely to develop heart disease. Overall, an abnormally large or small oldpeak appears to be a risk factor for heart disease, and males need to be more wary of developing heart disease than females.")
+    st.write("The strip plot tells us the relationship between a patient's sex, their oldpeak, and whether or not they have heart disease. More than half of the male patients appear to have heart disease, while only a small amount of the female patients have heart disease, suggesting that males are more likely to develop heart disease. Male patients also appear to typically have larger or smaller oldpeaks than female patients, with the oldpeaks of male patients ranging from 6 to 0, while the oldpeaks of female patients only really range from 4 to 0. Patients with heart disease often appear to have much higher or lower oldpeaks than patients without heart disease, suggesting that people with an abnormally high or low oldpeak are more likely to develop heart disease. Overall, an abnormally large or small oldpeak appears to be a risk factor for heart disease, and males need to be more wary of developing heart disease than females.")
     st.write("")
 elif x_option == 'Sex' and y_option == 'Age':
     plot_title= 'Sex, Age, and Heart Disease'
@@ -301,33 +287,26 @@ elif x_option == 'ST_Slope' and y_option == 'Cholesterol':
     x_axis_title= 'ST Slope'
     y_axis_title= 'Cholesterol'
     st.plotly_chart(plotly_strip_function(heart_failure_df, x_option , y_option , color_labels, color_scheme, plot_title, x_axis_title, y_axis_title, color_label_title))
-    st.write("The strip plot tells us the relationship between a patient's ST slope, their cholesterol levels, and whether or not they have heart disease.")
-    st.write("")
-elif x_option == 'ST_Slope' and y_option == 'RestingECG':
-    plot_title= 'ST Slope, Resting Electrocardiogram, and Heart Disease'
-    x_axis_title= 'ST Slope'
-    y_axis_title= 'Resting Electrocardiogram'
-    st.plotly_chart(plotly_strip_function(heart_failure_df, x_option , y_option , color_labels, color_scheme, plot_title, x_axis_title, y_axis_title, color_label_title))
-    st.write("The strip plot tells us")
+    st.write("The strip plot tells us the relationship between a patient's st slope, their cholesterol levels, and whether or not they have heart disease. A majority of patients with a flat st slope or an st slope that goes down have heart disease, suggesting that people with a flat st slope or an st slope that goes down are more at risk of developing heart disease. Patients with heart disease also on average seem to have slightly higher cholesterol levels than patients without heart disease, suggesting that people with higher cholesterol levels are more at risk of developing heart disease. There does not seem to be much of a relationship between a patient's st slope and their cholesterol levels. Overall, a higher cholesterol level and a flat st slope or an st slope that goes down are risk factors of heart disease.")
     st.write("")
 elif x_option == 'ST_Slope' and y_option == 'MaxHR':
     plot_title= 'ST Slope, Maximum Heart Rate, and Heart Disease'
     x_axis_title= 'ST Slope'
     y_axis_title= 'MaxHR'
     st.plotly_chart(plotly_strip_function(heart_failure_df, x_option , y_option , color_labels, color_scheme, plot_title, x_axis_title, y_axis_title, color_label_title))
-    st.write("The strip plot tells us")
+    st.write("The strip plot tells us the relationship between a patient's st slope, their maximum heart rate, and whether or not they have heart disease. A majority of patients with a flat st slope or an st slope that goes down have heart disease, suggesting that people with a flat st slope or an st slope that goes down are more at risk of developing heart disease. Patients with heart disease on average appear to have a lower maximum heart rate than patients without heart disease, suggesting that people with low maximum heart rates are more at risk of developing heart disease. Patients with a flat st slope or an st slope that goes down also on average appear to have a lower maximum heart rate than patients with an st slope that goes up. Overall, a lower maximum heart rate and a flat st slope or an st slope that goes down are risk factors of heart disease.")
     st.write("")
 elif x_option == 'ST_Slope' and y_option == 'Oldpeak':
     plot_title= 'ST Slope, Oldpeak, and Heart Disease'
     x_axis_title= 'ST Slope'
     y_axis_title= 'Oldpeak'
     st.plotly_chart(plotly_strip_function(heart_failure_df, x_option , y_option , color_labels, color_scheme, plot_title, x_axis_title, y_axis_title, color_label_title))
-    st.write("The strip plot tells us")
+    st.write("The strip plot tells us the relationship between a patient's st slope, their oldpeak, and whether or not they have heart disease. A majority of patients with a flat st slope or an st slope that goes down have heart disease, suggesting that people with a flat st slope or an st slope that goes down are more at risk of developing heart disease. Patients with heart disease often appear to have much higher or lower oldpeaks than patients without heart disease, suggesting that people with an abnormally high or low oldpeak are more likely to develop heart disease. Patients with a flat st slope or an st slope that goes down also generally appear to have abnormally higher or lower oldpeaks than people with an st slope that goes up. Overall, a flat st slope or an st slope that goes down and an abnormally high or low oldpeak are risk factors for heart disease.")
     st.write("")
 elif x_option == 'ST_Slope' and y_option == 'Age':
     plot_title= 'ST Slope, Age, and Heart Disease'
     x_axis_title= 'ST Slope'
     y_axis_title= 'Age'
     st.plotly_chart(plotly_strip_function(heart_failure_df, x_option , y_option , color_labels, color_scheme, plot_title, x_axis_title, y_axis_title, color_label_title))
-    st.write("The strip plot tells us")
+    st.write("The strip plot tells us the relationship between a patient's st slope, their age, and whether or not they have heart disease. A majority of patients with a flat st slope or an st slope that goes down have heart disease, suggesting that people with a flat st slope or an st slope that goes down are more at risk of developing heart disease. A significant majority of older patients have heart disease, while only some of the younger patients have heart disease, suggesting that the older someone is, the more likely they are to develop heart disease. There does not appear to be much of a relationship between a patient's age and their st slope. Overall, a flat st slope or an st slope that goes down and older age are risk factors for heart disease.")
     st.write("")
